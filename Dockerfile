@@ -55,8 +55,8 @@ WORKDIR ${INSIGHTS_CODE_DIR}/
 # insights service config commands below
 RUN pip install  --no-cache-dir -r ${INSIGHTS_CODE_DIR}/requirements/production.txt 
 
-RUN nodeenv ${INSIGHTS_NODEENV_DIR} --node=16.14.0 --prebuilt \
-    && npm install -g npm@8.5.x
+RUN nodeenv ${INSIGHTS_NODEENV_DIR} --node=18.15.0 --prebuilt \
+  && npm install -g npm@9.x.x
 
 # Tried to cache the dependencies by copying related files after the npm install step but npm post install fails in that case.
 COPY . ${INSIGHTS_CODE_DIR}/
@@ -81,8 +81,8 @@ FROM app as prod
 ENV DJANGO_SETTINGS_MODULE "analytics_dashboard.settings.production"
 
 CMD gunicorn \
-    --pythonpath=/edx/app/insights/edx_analytics_dashboard/analytics_dashboard \
-    --timeout=300 \
-    -b 0.0.0.0:8110 \
-    -w 2 \
-    - analytics_dashboard.wsgi:application
+  --pythonpath=/edx/app/insights/edx_analytics_dashboard/analytics_dashboard \
+  --timeout=300 \
+  -b 0.0.0.0:8110 \
+  -w 2 \
+  - analytics_dashboard.wsgi:application
