@@ -1,4 +1,3 @@
-if [[ $NODE == 16 ]]
 export NODE_VERSION=18.15.0
 
 docker exec -t insights_testing bash -c "
